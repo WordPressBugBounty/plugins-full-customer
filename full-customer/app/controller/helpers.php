@@ -119,16 +119,26 @@ function isSiteConnectedOnFull(): bool
 
 function fullGetTemplatesUrl(string $endpoint = ''): string
 {
-  return add_query_arg([
+  return esc_url(add_query_arg([
     'page'      => 'full-templates',
     'endpoint'  => $endpoint
-  ], admin_url('admin.php'));
+  ], admin_url('admin.php')));
 }
 
 function fullJsonEncode($data): string
 {
-  return wp_slash(json_encode(
+  return wp_slash(wp_json_encode(
     $data,
     JSON_UNESCAPED_LINE_TERMINATORS | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE
   ));
+}
+
+function fullFileSystem()
+{
+  global $wp_filesystem;
+
+  require_once(ABSPATH . '/wp-admin/includes/file.php');
+  WP_Filesystem();
+
+  return $wp_filesystem;
 }

@@ -111,8 +111,7 @@ class ElementorTemplates extends FullCustomerController
   {
     global $wpdb;
 
-    $sql = "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%_full/cloud/%'";
-    $wpdb->query($sql);
+    $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE '%_full/cloud/%'"));
 
     return new WP_REST_Response();
   }
@@ -405,7 +404,7 @@ class ElementorTemplates extends FullCustomerController
 
     return new WP_REST_Response([
       'postId'  => $postId,
-      'button'  => '<a href="' . fullGetTemplatesUrl('cloud') . '">Gerenciar</a>'
+      'button'  => '<a href="' . esc_url(fullGetTemplatesUrl('cloud')) . '">Gerenciar</a>'
     ]);
   }
 
